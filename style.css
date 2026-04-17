@@ -81,6 +81,11 @@ body {
   width: 100%;
 }
 
+.report-prefix {
+  font-size: 36px;
+  font-weight: 700;
+}
+
 .report-text {
   font-size: 36px;
   font-weight: 500;
@@ -88,8 +93,9 @@ body {
   line-height: 1.1;
 }
 
+/* ✅ FIXED DROPDOWN SIZE */
 .report-month-select {
-  font-size: 36px;
+  font-size: 22px; /* 🔥 reduced from 36px */
   font-weight: 500;
   color: #000;
   line-height: 1.1;
@@ -101,6 +107,7 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   padding-right: 28px;
+
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='12' viewBox='0 0 18 12'><path fill='%2387b7b8' d='M1.8 1.5 9 9l7.2-7.5 1.8 1.8L9 12 0 3.3z'/></svg>");
   background-repeat: no-repeat;
   background-position: right center;
@@ -108,6 +115,7 @@ body {
 }
 
 .report-month-select option {
+  font-size: 16px; /* helps slightly in some browsers */
   color: #000;
   background: #fff;
 }
@@ -170,7 +178,67 @@ body {
   text-underline-offset: 4px;
 }
 
+/* ========================= */
+/* SAUNA PAGE STYLES */
+/* ========================= */
+
+.sauna-header-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr 1fr;
+  text-align: center;
+  margin-top: 30px;
+  padding: 0 40px;
+  color: #2c5e63;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.sauna-header span {
+  font-weight: 400;
+}
+
+.sauna-grid {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr 1fr;
+  gap: 30px;
+  padding: 30px 40px 60px;
+  align-items: center;
+}
+
+.sauna-label {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c5e63;
+}
+
+.sauna-card {
+  background: #f7f7f7;
+  border-radius: 24px;
+  box-shadow: 10px 12px 16px rgba(0,0,0,0.25);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  row-gap: 8px;
+}
+
+.sauna-card.single {
+  grid-template-columns: 1fr;
+}
+
+.mini-label {
+  font-size: 14px;
+  color: #444;
+}
+
+.mini-value {
+  font-size: 28px;
+}
+
+/* ========================= */
 /* RESPONSIVE */
+/* ========================= */
+
 @media (max-width: 900px) {
   .nav {
     padding: 16px 20px;
@@ -186,18 +254,17 @@ body {
     padding: 28px 20px;
   }
 
-  .report-text,
-  .report-month-select {
+  .report-text {
     font-size: 28px;
+  }
+
+  .report-month-select {
+    font-size: 20px;
   }
 
   .summary-card {
     width: 210px;
     height: 170px;
-  }
-
-  .summary-title {
-    font-size: 22px;
   }
 
   .summary-value {
@@ -227,13 +294,12 @@ body {
     gap: 6px;
   }
 
-  .report-text,
-  .report-month-select {
+  .report-text {
     font-size: 22px;
   }
 
-  .cards {
-    padding-top: 40px;
+  .report-month-select {
+    font-size: 18px;
   }
 
   .summary-card {
@@ -248,71 +314,4 @@ body {
   .sheet-link {
     font-size: 18px;
   }
-}
-
-/* SAUNA PAGE */
-
-.report-prefix {
-  font-size: 36px;
-  font-weight: 700;
-}
-
-/* HEADER ROW */
-.sauna-header-row {
-  display: grid;
-  grid-template-columns: 150px 1fr 1fr 1fr;
-  text-align: center;
-  margin-top: 30px;
-  padding: 0 40px;
-  color: #2c5e63;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.sauna-header span {
-  font-weight: 400;
-}
-
-/* GRID */
-.sauna-grid {
-  display: grid;
-  grid-template-columns: 150px 1fr 1fr 1fr;
-  gap: 30px;
-  padding: 30px 40px 60px;
-  align-items: center;
-}
-
-/* LEFT LABEL */
-.sauna-label {
-  font-size: 24px;
-  font-weight: 600;
-  color: #2c5e63;
-}
-
-/* CARDS */
-.sauna-card {
-  background: #f7f7f7;
-  border-radius: 24px;
-  box-shadow: 10px 12px 16px rgba(0,0,0,0.25);
-  padding: 16px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  text-align: center;
-  row-gap: 8px;
-}
-
-/* SINGLE COLUMN CARD */
-.sauna-card.single {
-  grid-template-columns: 1fr;
-}
-
-/* MINI LABEL */
-.mini-label {
-  font-size: 14px;
-  color: #444;
-}
-
-/* MINI VALUE */
-.mini-value {
-  font-size: 28px;
 }

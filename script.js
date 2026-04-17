@@ -1,7 +1,6 @@
 const SHEET_ID = "1HIkKg1TjGSZgolVedtudaYeZq9DV0sV67m0E61gg9M4";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const pageTitle = document.getElementById("pageTitle");
   const sheetLink = document.getElementById("sheetLink");
   const status = document.getElementById("status");
   const cards = document.getElementById("cards");
@@ -14,7 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const START_YEAR = 2026;
   const START_MONTH_INDEX = 2; // March = 2
-  const MONTHS_TO_SHOW = 24;   // adjust as needed
+  const MONTHS_TO_SHOW = 24;
+
+  sheetLink.href = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?usp=sharing`;
 
   function setBlankTotals() {
     saunasValue.textContent = "0";
@@ -40,22 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${month} ${year}`;
   }
 
-  function formatOptionLabel(date) {
-    const month = date.toLocaleString("en-US", { month: "long" }).toUpperCase();
-    const year = date.getFullYear();
-    return `${month} ${year}`;
-  }
-
   function buildMonthOptions() {
     const options = [];
+
     for (let i = 0; i < MONTHS_TO_SHOW; i += 1) {
       const date = new Date(START_YEAR, START_MONTH_INDEX + i, 1);
+
       options.push({
         value: formatTabUpper(date),
-        label: formatOptionLabel(date),
+        label: formatTabUpper(date),
         candidates: [formatTabUpper(date), formatTabTitle(date)],
       });
     }
+
     return options;
   }
 
@@ -69,9 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const el = document.createElement("option");
       el.value = option.value;
       el.textContent = option.label;
+
       if (option.value === previousMonthValue) {
         el.selected = true;
       }
+
       monthSelect.appendChild(el);
     });
 
@@ -79,9 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       monthSelect.value = options[0].value;
     }
   }
-
-  pageTitle.textContent = "Monthly Logistics Report";
-  sheetLink.href = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?usp=sharing`;
 
   function gvizUrl(sheetId, tabName) {
     return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${encodeURIComponent(tabName)}`;
@@ -107,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function toNumber(value) {
     if (value == null || value === "") return 0;
+
     const cleaned = value.toString().replace(/,/g, "").trim();
     const num = Number(cleaned);
     return Number.isFinite(num) ? num : 0;
@@ -172,8 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const parts = selectedValue.split(" ");
     const year = parts[parts.length - 1];
     const monthUpper = parts.slice(0, -1).join(" ");
-    const monthTitle =
-      monthUpper.charAt(0) + monthUpper.slice(1).toLowerCase();
+    const monthTitle = monthUpper.charAt(0) + monthUpper.slice(1).toLowerCase();
 
     return [
       `${monthUpper} ${year}`,
@@ -188,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setBlankTotals();
 
     const candidateTabs = getCandidateNamesFromSelected();
-    const displayTitle = monthSelect.value;
 
     try {
       let sheetData = null;
@@ -201,8 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
           console.warn(`Tab attempt failed: ${candidate}`, error);
         }
       }
-
-      pageTitle.textContent = `Monthly Logistics Report - ${displayTitle}`;
 
       if (!sheetData) {
         status.textContent = "No data available for this month yet.";
@@ -238,7 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cards.style.display = "flex";
     } catch (error) {
       console.error("Dashboard load error:", error);
-      pageTitle.textContent = `Monthly Logistics Report - ${displayTitle}`;
       status.textContent = "No data available for this month yet.";
       status.style.display = "block";
       cards.style.display = "flex";

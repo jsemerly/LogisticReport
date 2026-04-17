@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monthly Logistics Report - March 2026</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #b8cdd2;
+      color: #000;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #c1d5da;
+    }
+
+    .nav {
+      background: #1f6468;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 32px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      font-size: 20px;
+    }
+
+    .nav-links .home {
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .title-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 0;
+    }
+
+    .title-card {
+      width: 100%;
+      max-width: 760px;
+      background: #f7f7f7;
+      border-radius: 32px;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 34px;
+      box-shadow: 12px 14px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      padding: 56px 24px 36px;
+    }
+
+    .summary-card {
+      width: 230px;
+      height: 185px;
+      background: #f7f7f7;
+      border-radius: 28px;
+      box-shadow: 12px 14px 18px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .summary-title {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .summary-value {
+      margin-top: 18px;
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .sheet-link {
+      text-align: center;
+      padding: 14px 16px 60px;
+      font-size: 18px;
+    }
+
+    .sheet-link a {
+      color: #000;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .status {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .nav {
+        padding: 16px 20px;
+      }
+
+      .nav-links {
+        font-size: 18px;
+        gap: 18px;
+      }
+
+      .title-card {
+        font-size: 28px;
+      }
+
+      .summary-card {
+        width: 210px;
+        height: 170px;
+      }
+
+      .summary-title {
+        font-size: 22px;
+      }
+
+      .summary-value {
+        font-size: 44px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-logo img {
+        height: 40px;
+      }
+
+      .title-card {
+        font-size: 22px;
+        border-radius: 24px;
+      }
+
+      .cards {
+        padding-top: 36px;
+      }
+
+      .summary-card {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="nav">
+      <div class="nav-links">
+        <span class="home">HOME</span>
+        <span>HaloSaunas</span>
+        <span>HaloSTARS</span>
+        <span>HaloReds</span>
+        <span>HaloGenerators</span>
+      </div>
+
+      <div class="nav-logo">
+        <img src="logo.png" alt="Halotherapy Solutions" />
+      </div>
+    </div>
+
+    <div class="title-wrap">
+      <div class="title-card" id="pageTitle">Monthly Logistics Report - MARCH 2026</div>
+    </div>
+
+    <div class="status" id="status">Loading...</div>
+
+    <div class="cards" id="cards" style="display:none;">
+      <div class="summary-card">
+        <div class="summary-title">HaloSaunas Shipped</div>
+        <div class="summary-value" id="saunasValue">0</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-title">HaloSTARS Shipped</div>
+        <div class="summary-value" id="starsValue">0</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-title">HaloReds Shipped</div>
+        <div class="summary-value" id="redsValue">0</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-title">HaloGenerators Shipped</div>
+        <div class="summary-value" id="generatorsValue">0</div>
+      </div>
+    </div>
+
+    <div class="sheet-link">
+      <a id="sheetLink" href="#" target="_blank" rel="noreferrer">Link to full data sheet here</a>
+    </div>
+  </div>
+
+  <script>
+    const SHEET_ID = "1HIkKg1TjGSZgolVedtudaYeZq9DV0sV67m0E61gg9M4";
+    const TAB_NAME = "March 2026";
+
+    document.getElementById("pageTitle").textContent =
+      `Monthly Logistics Report - ${TAB_NAME.toUpperCase()}`;
+    document.getElementById("sheetLink").href =
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?usp=sharing`;
+
+    function gvizUrl(sheetId, tabName) {
+      return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${encodeURIComponent(tabName)}&tqx=out:json`;
+    }
+
+    function parseGviz(text) {
+      const json = text
+        .replace(/^\/\/O_o\s*/, "")
+        .replace(/^google\.visualization\.Query\.setResponse\(/, "")
+        .replace(/\);$/, "");
+      return JSON.parse(json);
+    }
+
+    function normalizeText(value) {
+      return (value || "")
+        .toString()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function toNumber(value) {
+      if (value == null || value === "") return 0;
+      const num = Number(value.toString().replace(/,/g, "").trim());
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function groupFromHeader(label) {
+      const clean = normalizeText(label).toLowerCase();
+
+      if (clean.includes("sauna")) return "HaloSaunas";
+      if (clean.includes("star")) return "HaloSTARS";
+      if (clean.includes("red")) return "HaloReds";
+
+      if (
+        clean.includes("generator") ||
+        clean.includes("halofx") ||
+        clean.includes("halogx") ||
+        clean.includes("halomini") ||
+        clean.includes("haloflex") ||
+        clean.includes("halopocket")
+      ) {
+        return "HaloGenerators";
+      }
+
+      return null;
+    }
+
+    async function loadDashboard() {
+      const status = document.getElementById("status");
+      const cards = document.getElementById("cards");
+
+      try {
+        const res = await fetch(gvizUrl(SHEET_ID, TAB_NAME));
+        const text = await res.text();
+        const parsed = parseGviz(text);
+        const rows = parsed.table.rows || [];
+        const grid = rows.map(row => (row.c || []).map(cell => cell?.v ?? ""));
+
+        const headerRow = grid.find(row =>
+          row.some((cell, index) => index > 0 && normalizeText(cell))
+        );
+
+        const shippedRow = grid.find(row =>
+          normalizeText(row[0]).toLowerCase().includes("units shipped last month")
+        );
+
+        if (!headerRow || !shippedRow) {
+          throw new Error("Could not find the product headers or the 'Units shipped last month' row.");
+        }
+
+        const headers = headerRow.slice(1).map(cell => normalizeText(cell));
+        const values = shippedRow.slice(1, headers.length + 1).map(toNumber);
+
+        const groupedTotals = {
+          HaloSaunas: 0,
+          HaloSTARS: 0,
+          HaloReds: 0,
+          HaloGenerators: 0
+        };
+
+        headers.forEach((header, index) => {
+          const group = groupFromHeader(header);
+          if (!group) return;
+          groupedTotals[group] += values[index] || 0;
+        });
+
+        document.getElementById("saunasValue").textContent = groupedTotals.HaloSaunas.toLocaleString();
+        document.getElementById("starsValue").textContent = groupedTotals.HaloSTARS.toLocaleString();
+        document.getElementById("redsValue").textContent = groupedTotals.HaloReds.toLocaleString();
+        document.getElementById("generatorsValue").textContent = groupedTotals.HaloGenerators.toLocaleString();
+
+        status.style.display = "none";
+        cards.style.display = "flex";
+      } catch (error) {
+        status.textContent = "Unable to load the sheet data.";
+        console.error(error);
+      }
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
